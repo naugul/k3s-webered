@@ -14,23 +14,22 @@ flannel_iface: eth0
 kube_vip_arp: true
 
 # apiserver_endpoint is virtual ip-address which will be configured on each master
-apiserver_endpoint: 172.16.0.50
+apiserver_endpoint: 172.16.123.50
 
 # k3s_token is required  masters can talk together securely
 # this token should be alpha numeric only
-k3s_token: some-SUPER-DEDEUPER-secret-password
+k3s_token: GanQlqKZip2g9viJtchZCKbL2YW02s82HKaEdI7m
 
 # The IP on which the node is reachable in the cluster.
 # Here, a sensible default is provided, you can still override
 # it for each of your hosts, though.
-k3s_node_ip: "{{ ansible_facts['flannel_iface']['ipv4']['address'] }}"
+k3s_node_ip: "{{ ansible_facts[(flannel_iface)]['ipv4']['address'] }}"
 
 # Disable the taint manually by setting: k3s_master_taint = false
 k3s_master_taint: "{{ true if groups['node'] | default([]) | length >= 1 else false }}"
 
 # these arguments are recommended for servers as well as agents:
 extra_args: >-
-  {{ '--flannel-iface=' + flannel_iface if calico_iface is not defined and cilium_iface is not defined else '' }}
   --node-ip={{ k3s_node_ip }}
 
 # change these to your liking, the only required are: --disable servicelb, --tls-san {{ apiserver_endpoint }}
@@ -71,4 +70,4 @@ metal_lb_speaker_tag_version: v0.14.8
 metal_lb_controller_tag_version: v0.14.8
 
 # metallb ip range for load balancer
-metal_lb_ip_range: 172.16.0.80-172.16.0.89
+metal_lb_ip_range: 172.16.0.70-172.16.0.99

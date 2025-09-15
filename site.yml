@@ -15,6 +15,7 @@
   roles:
     - role: prereq
       become: true
+    - role: download
       become: true
 
 - name: Setup k3s servers
