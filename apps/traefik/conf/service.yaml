@@ -1,0 +1,14 @@
+http:
+  routers:
+    rfs:
+      entryPoints:
+        - "websecure"
+      rule: "Host(`rfs.yrigoyen.olivadiegom.com.ar`)"
+      service: rfs
+
+  services:
+    rfs:
+      loadBalancer:
+        servers:
+          - url: "http://rfs.iturria.com.ar"
+        passHostHeader: true
